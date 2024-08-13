@@ -661,24 +661,41 @@ console.log("contenu de data",data);
 
 
   let DeleteProspector = () => {
-    let queryDeleteProspector = `DELETE FROM prospecteur WHERE idProspecteur = ?`;
+    console.log("suppression");
+    let queryDeleteProspectorInProjetProspector = `DELETE FROM projet_prospecteur WHERE idProspecteur = ?`;
 
     let id = data.id;
-    con.query(queryDeleteProspector, [id], (error, results) => {
+    con.query(queryDeleteProspectorInProjetProspector, [id], (error, results) => {
       if (error) {
+        console.log(error);
       } else {
-        res.sendStatus(200);
+        let queryDeleteProspector = `DELETE FROM prospecteur WHERE idProspecteur = ?`;
+
+        let id = data.id;
+        con.query(queryDeleteProspector, [id], (error,results) => {
+          if(error){
+            console.log("erreur suppression de prospecteur");
+            console.log(error);
+          }
+          else{
+            res.sendStatus(200);
+          }
+        })
       }
-    });
+    }
+  
+  
+  
+  
+  
+  );
   };
 
   let verifyUser = (data) => {
     console.log("vérification de prospecteur");
     return new Promise((resolve, reject) => {
       let query = `SELECT * FROM prospecteur WHERE idProspecteur = ?`;
-
       let id = data.id;
-
       con.query(query, [id], (err, results) => {
         if (err) {
           reject(err);

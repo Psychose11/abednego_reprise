@@ -313,11 +313,14 @@ export default function EnhancedTable() {
 
         if (userConfirmed) {
           try {
+
             const response = await axios.post(url, dataIns, { headers });
 
             if (response.status === 200) {
               console.log("Data sent successfully");
               showSuccess();
+              window. location. reload()
+
             } else {
               console.error("Failed to send data");
               showError();
